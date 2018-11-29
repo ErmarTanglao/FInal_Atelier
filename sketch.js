@@ -16,11 +16,11 @@ var serial; // variable to hold an instance of the serialport library
 
 function preload() {
   img = loadImage('pictures/ghost.png');
+  img1 = loadImage("pictures/background.png")
 }
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-  background(255);
   // for (var i=0; i<1; i++) {
   //   ghosts.push(new Ghost());
   // }
@@ -38,16 +38,15 @@ function setup() {
 }
 
 function draw() {
-  background(255);
+  background(img1);
+  // setTimeout(spawn,3000);
   spawn();
   lights();
-  setTimeout(spawn, 3000);
   // collision();
   
     for (var i=0; i<ghosts.length; i++){
       ghosts[i].display();
       ghosts[i].move();
-      setTimeout(ghosts[i].display, 3000);
     }
     for(var i=0; i<Light_Beams.length; i++){
       Light_Beams[i].display();
