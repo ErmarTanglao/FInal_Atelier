@@ -11,7 +11,7 @@ var serial; // variable to hold an instance of the serialport library
   var retrigger1 = true;
   var retrigger2 = true;
   var retrigger3 = true;
-  var Light_Beams = [];
+  var Light_Balls = [];
 
 
 function preload() {
@@ -41,37 +41,28 @@ function draw() {
   background(255);
   spawn();
   lights();
-  setTimeout(spawn, 3000);
-  // collision();
+  collision();
   
-    for (var i=0; i<ghosts.length; i++){
-      ghosts[i].display();
-      ghosts[i].move();
-      setTimeout(ghosts[i].display, 3000);
-    }
-    for(var i=0; i<Light_Beams.length; i++){
-      Light_Beams[i].display();
-      Light_Beams[i].move();
-    }
-
-    for (var i=0; i<ghosts.length; i++){
-      for(var j=0; j<Light_Beams.length; j++){
-        if(dist(Light_Beams[j].x, Light_Beams[j].y, ghosts[i].x, ghosts[i].y) < 50){
-          console.log("hit")
-          Light_Beams.splice(0, 1);
-          ghosts.splice(0, 1);
-        }
-      }
-    }
+  for (var i=0; i<ghosts.length; i++){
+    ghosts[i].display();
+    ghosts[i].move();
   }
+  for(var i=0; i<Light_Balls.length; i++){
+    Light_Balls[i].display();
+    Light_Balls[i].move();
+  }
+}
 
 function spawn(){
   if(switch1==0 ){
     if (retrigger1 == true){
     retrigger1 = false;
+    
     // fill(0)
+    for (var i=0; i<1; i++) {
       ghosts.push(new Ghost1());
-    console.log("a")
+  }
+    // console.log("a")
   }
  } else{
     retrigger1 = true;
@@ -100,11 +91,21 @@ function lights(){
   if(switch2==0 ){
     if (retrigger2 == true){
       retrigger2 = false;
-      Light_Beams.push(new Light_Beam1());
-      console.log("b");
+      for (var i=0; i<1; i++) {
+        Light_Balls.push(new Light_Ball1());
+    }
+      console.log("a")
     }
   } else {
     retrigger2 = true;
+  }
+}
+
+function collision(){
+  for(i = 1; i < Light_Balls.length; i ++){
+    if(dist(Light_Balls[i].x, Light_Balls[i].y, ghosts[i].x, ghosts[i].y)<5){
+      console.log("hit")
+    }
   }
 }
 
@@ -155,8 +156,8 @@ function Ghost3(){
 }
 
 
-function Light_Beam1(){
-	this.x = 125;
+function Light_Ball1(){
+	this.x = 150;
 	this.y = windowHeight;
 	this.r = 50;
 	this.dy = 2;
@@ -164,12 +165,12 @@ function Light_Beam1(){
 		this.display = function(){
       noStroke();
       fill("yellow");
-			rect(this.x, this.y, 50,100);
+			ellipse(this.x, this.y, this.r, this.r);
 		}
 		
 		this.move = function(){
 			this.y -= this.dy;
-    }
+		}
 }
  
  function serverConnected() {
