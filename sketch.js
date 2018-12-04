@@ -255,7 +255,7 @@ function Light_Beam3(){
 			this.y -= this.dy;
     }
 }
- 
+
  function serverConnected() {
   console.log('connected to server.');
 }
