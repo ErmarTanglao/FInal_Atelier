@@ -8,9 +8,14 @@ var serial; // variable to hold an instance of the serialport library
   var ghosts = [];
   var mappedSensor1;
   var sensor1;
+  var sensor2;
+  var sensor3;
   var retrigger1 = true;
   var retrigger2 = true;
   var retrigger3 = true;
+  var retrigger4 = true;
+  var retrigger5 = true;
+  var retrigger6 = true;
   var Light_Beams = [];
 
 
@@ -64,6 +69,9 @@ function draw() {
     }
   }
 
+
+  // Ghosts Spawning
+
 function spawn(){
   if(switch1==0 ){
     if (retrigger1 == true){
@@ -74,6 +82,30 @@ function spawn(){
   }
  } else{
     retrigger1 = true;
+
+  } 
+
+  if(switch2==0 ){
+    if (retrigger2 == true){
+    retrigger2 = false;
+    // fill(0)
+      ghosts.push(new Ghost2());
+    console.log("a")
+  }
+ } else{
+    retrigger2 = true;
+
+  } 
+
+  if(switch3==0 ){
+    if (retrigger3 == true){
+    retrigger3 = false;
+    // fill(0)
+      ghosts.push(new Ghost3());
+    console.log("a")
+  }
+ } else{
+    retrigger3 = true;
 
   } 
 
@@ -93,22 +125,41 @@ function spawn(){
 //   } 
 }
 
+//Light Ball Spawning
 function lights(){
-  // var b = false;
-  // if(sensor1>700){
-  if(switch2==0 ){
-    if (retrigger2 == true){
-      retrigger2 = false;
+  if(sensor1 <= 100 ){
+    if (retrigger4 == true){
+      retrigger4 = false;
       Light_Beams.push(new Light_Beam1());
       console.log("b");
     }
   } else {
-    retrigger2 = true;
+    retrigger4 = true;
+  }
+
+  if(sensor2 <= 200 ){
+    if (retrigger5 == true){
+      retrigger5 = false;
+      Light_Beams.push(new Light_Beam2());
+      console.log("b");
+    }
+  } else {
+    retrigger5 = true;
+  }
+
+  if(sensor3 <= 18 ){
+    if (retrigger6 == true){
+      retrigger6 = false;
+      Light_Beams.push(new Light_Beam3());
+      console.log("b");
+    }
+  } else {
+    retrigger6= true;
   }
 }
 
 function Ghost1(){
-	this.x = 100;
+	this.x = 110;
 	this.y = 100;
 	this.r = 10;
 	this.dy = 2;
@@ -123,7 +174,7 @@ function Ghost1(){
 }
 
 function Ghost2(){
-	this.x = 200;
+	this.x = 440;
 	this.y = 100;
 	this.r = 10;
 	this.dy = 2;
@@ -139,7 +190,7 @@ function Ghost2(){
 
 
 function Ghost3(){
-	this.x = 300;
+	this.x = 770;
 	this.y = 100;
 	this.r = 10;
 	this.dy = 2;
@@ -155,7 +206,41 @@ function Ghost3(){
 
 
 function Light_Beam1(){
-	this.x = 125;
+	this.x = 130;
+	this.y = windowHeight;
+	this.r = 50;
+	this.dy = 2;
+
+		this.display = function(){
+      noStroke();
+      fill("yellow");
+			rect(this.x, this.y, 50,100);
+		}
+		
+		this.move = function(){
+			this.y -= this.dy;
+    }
+}
+
+function Light_Beam2(){
+	this.x = 460;
+	this.y = windowHeight;
+	this.r = 50;
+	this.dy = 2;
+
+		this.display = function(){
+      noStroke();
+      fill("yellow");
+			rect(this.x, this.y, 50,100);
+		}
+		
+		this.move = function(){
+			this.y -= this.dy;
+    }
+}
+
+function Light_Beam3(){
+	this.x = 790;
 	this.y = windowHeight;
 	this.r = 50;
 	this.dy = 2;
@@ -192,10 +277,13 @@ function serialEvent() {
   //check to see that there's actually a string there:
   if (inString.length > 0 ) {
     var sensors = split(inString, ',');            // split the string on the commas
-    if (sensors.length > 2) {                      // if there are three elements
+    if (sensors.length > 5) {                      // if there are three elements
       switch1 = sensors[0];  
-      switch2 = sensors[1]; 
-      sensor1 = sensors[2]; 
+      switch2 = sensors[1];
+      switch3 = sensors[2]; 
+      sensor1 = sensors[3];
+      sensor2 = sensors[4];
+      sensor3 = sensors[5]; 
       mappedSensor1 = map(sensor1, 0, 1023, height, 0);     
     }
   }
