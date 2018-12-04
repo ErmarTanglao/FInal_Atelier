@@ -22,7 +22,9 @@ var serial; // variable to hold an instance of the serialport library
 
 function preload() {
   img = loadImage('pictures/ghost.png');
-  img1 = loadImage("pictures/background.png")
+  img1 = loadImage("pictures/background.png");
+  img_heart = loadImage("pictures/heart_red.png");
+  img_dead = loadImage("pictures/heart_black.png");
 }
 
 function setup() {
@@ -47,16 +49,6 @@ function draw() {
   background(img1);
   spawn();
   lights();
-
-  if (hit == 0){
-    fill("red");
-    lives1();
-    lives2();
-      if (hit == 1){
-        fill("black")
-      }
-  }
-
   lives1();
   lives2();
   
@@ -147,7 +139,7 @@ function spawn(){
 
 //Light Ball Spawning
 function lights(){
-  if(sensor1 <= 100 ){
+  if(sensor1 <= 160 ){
     if (retrigger4 == true){
       retrigger4 = false;
       Light_Beams.push(new Light_Beam1());
@@ -157,7 +149,7 @@ function lights(){
     retrigger4 = true;
   }
 
-  if(sensor2 <= 200 ){
+  if(sensor2 <= 15 ){
     if (retrigger5 == true){
       retrigger5 = false;
       Light_Beams.push(new Light_Beam2());
@@ -167,7 +159,7 @@ function lights(){
     retrigger5 = true;
   }
 
-  if(sensor3 <= 18 ){
+  if(sensor3 <= 100 ){
     if (retrigger6 == true){
       retrigger6 = false;
       Light_Beams.push(new Light_Beam3());
@@ -179,12 +171,12 @@ function lights(){
 }
 
 function Ghost1(){
-	this.x = 110;
+	this.x = 90;
 	this.y = 100;
-	this.dy = 2;
+	this.dy = 5;
 
 		this.display = function(){
-			image(img, this.x, this.y, 100, 100);
+			image(img, this.x, this.y, 150, 150);
 		}
 		
 		this.move = function(){
@@ -193,12 +185,12 @@ function Ghost1(){
 }
 
 function Ghost2(){
-	this.x = 440;
+	this.x = 420;
 	this.y = 100;
-	this.dy = 2;
+	this.dy = 5;
 
 		this.display = function(){
-			image(img, this.x, this.y, 100, 100);
+			image(img, this.x, this.y, 150, 150);
 		}
 		
 		this.move = function(){
@@ -208,12 +200,12 @@ function Ghost2(){
 
 
 function Ghost3(){
-	this.x = 770;
+	this.x = 740;
 	this.y = 100;
-	this.dy = 2;
+	this.dy = 5;
 
 		this.display = function(){
-			image(img, this.x, this.y, 100, 100);
+			image(img, this.x, this.y, 150, 150);
 		}
 		
 		this.move = function(){
@@ -271,21 +263,31 @@ function Light_Beam3(){
 }
 
 function lives1(){
-  this.x = 330;
+  this.x = 250;
   this.y = 900;
   this.r = 100;
 
   noStroke();
-  ellipse(this.x, this.y, this.r, this.r)
+
+  if (hit > 0){
+    image(img_dead, this.x, this.y, 150, 150)
+  } else {
+    image(img_heart, this.x, this.y, 150, 150)
+  }
 }
 
 function lives2(){
-  this.x = 640;
+  this.x = 570;
   this.y = 900;
   this.r = 100;
 
   noStroke();
-  ellipse(this.x, this.y, this.r, this.r)
+
+  if (hit > 1){
+    image(img_dead, this.x, this.y, 150, 150)
+  } else {
+    image(img_heart, this.x, this.y, 150, 150)
+  }
 }
  function serverConnected() {
   console.log('connected to server.');
