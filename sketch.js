@@ -17,6 +17,7 @@ var serial; // variable to hold an instance of the serialport library
   var retrigger5 = true;
   var retrigger6 = true;
   var Light_Beams = [];
+  var hit = 0;
 
 
 function preload() {
@@ -44,10 +45,20 @@ function setup() {
 
 function draw() {
   background(img1);
-  // setTimeout(spawn,3000);
   spawn();
   lights();
-  // collision();
+
+  if (hit == 0){
+    fill("red");
+    lives1();
+    lives2();
+      if (hit == 1){
+        fill("black")
+      }
+  }
+
+  lives1();
+  lives2();
   
     for (var i=0; i<ghosts.length; i++){
       ghosts[i].display();
@@ -61,11 +72,20 @@ function draw() {
     for (var i=0; i<ghosts.length; i++){
       for(var j=0; j<Light_Beams.length; j++){
         if(dist(Light_Beams[j].x, Light_Beams[j].y, ghosts[i].x, ghosts[i].y) < 50){
-          console.log("hit")
           Light_Beams.splice(0, 1);
           ghosts.splice(0, 1);
+          console.log("Killed")
         }
       }
+    }
+
+    for (var i = 0 ; i < ghosts.length; i++){
+      if(ghosts[i].y > windowHeight){
+        console.log("Lose Life");
+        ghosts.splice(0,1);
+        hit += 1;
+        console.log(hit)
+      } 
     }
   }
 
@@ -161,7 +181,6 @@ function lights(){
 function Ghost1(){
 	this.x = 110;
 	this.y = 100;
-	this.r = 10;
 	this.dy = 2;
 
 		this.display = function(){
@@ -176,7 +195,6 @@ function Ghost1(){
 function Ghost2(){
 	this.x = 440;
 	this.y = 100;
-	this.r = 10;
 	this.dy = 2;
 
 		this.display = function(){
@@ -192,7 +210,6 @@ function Ghost2(){
 function Ghost3(){
 	this.x = 770;
 	this.y = 100;
-	this.r = 10;
 	this.dy = 2;
 
 		this.display = function(){
@@ -208,7 +225,6 @@ function Ghost3(){
 function Light_Beam1(){
 	this.x = 130;
 	this.y = windowHeight;
-	this.r = 50;
 	this.dy = 2;
 
 		this.display = function(){
@@ -225,7 +241,6 @@ function Light_Beam1(){
 function Light_Beam2(){
 	this.x = 460;
 	this.y = windowHeight;
-	this.r = 50;
 	this.dy = 2;
 
 		this.display = function(){
@@ -242,7 +257,6 @@ function Light_Beam2(){
 function Light_Beam3(){
 	this.x = 790;
 	this.y = windowHeight;
-	this.r = 50;
 	this.dy = 2;
 
 		this.display = function(){
@@ -256,6 +270,23 @@ function Light_Beam3(){
     }
 }
 
+function lives1(){
+  this.x = 330;
+  this.y = 900;
+  this.r = 100;
+
+  noStroke();
+  ellipse(this.x, this.y, this.r, this.r)
+}
+
+function lives2(){
+  this.x = 640;
+  this.y = 900;
+  this.r = 100;
+
+  noStroke();
+  ellipse(this.x, this.y, this.r, this.r)
+}
  function serverConnected() {
   console.log('connected to server.');
 }
