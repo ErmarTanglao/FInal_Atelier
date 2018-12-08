@@ -6,6 +6,9 @@ var serial; // variable to hold an instance of the serialport library
   var lastValue = false;
   var switch3;
   var ghosts = [];
+  var ghosts1 = [];
+  var ghosts2 = [];
+  var ghosts3 = []
   var mappedSensor1;
   var sensor1;
   var sensor2;
@@ -17,6 +20,9 @@ var serial; // variable to hold an instance of the serialport library
   var retrigger5 = true;
   var retrigger6 = true;
   var Light_Beams = [];
+  var Light_Beams1 = [];
+  var Light_Beams2 = [];
+  var Light_Beams3 = [];
   var hit = 0;
 
 
@@ -52,34 +58,90 @@ function draw() {
   lives1();
   lives2();
   
-    for (var i=0; i<ghosts.length; i++){
-      ghosts[i].display();
-      ghosts[i].move();
+    for (var i=0; i<ghosts1.length; i++){
+      ghosts1[i].display();
+      ghosts1[i].move();
     }
-    for(var i=0; i<Light_Beams.length; i++){
-      Light_Beams[i].display();
-      Light_Beams[i].move();
+    for (var i=0; i<ghosts2.length; i++){
+      ghosts2[i].display();
+      ghosts2[i].move();
+    }
+    for (var i=0; i<ghosts3.length; i++){
+      ghosts3[i].display();
+      ghosts3[i].move();
+    }
+    for(var i=0; i<Light_Beams1.length; i++){
+      Light_Beams1[i].display();
+      Light_Beams1[i].move();
+    }
+    for(var i=0; i<Light_Beams2.length; i++){
+      Light_Beams2[i].display();
+      Light_Beams2[i].move();
+    }
+    for(var i=0; i<Light_Beams3.length; i++){
+      Light_Beams3[i].display();
+      Light_Beams3[i].move();
     }
 
-    for (var i=0; i<ghosts.length; i++){
-      for(var j=0; j<Light_Beams.length; j++){
-        if(dist(Light_Beams[j].x, Light_Beams[j].y, ghosts[i].x, ghosts[i].y) < 50){
-          Light_Beams.splice(0, 1);
-          ghosts.splice(0, 1);
+    for (var i=0; i<ghosts1.length; i++){
+      for(var j=0; j<Light_Beams1.length; j++){
+        if(dist(Light_Beams1[j].x, Light_Beams1[j].y, ghosts1[i].x, ghosts1[i].y) < 50){
+          Light_Beams1.splice(0, 1);
+          ghosts1.splice(0, 1);
           console.log("Killed")
         }
       }
     }
 
-    for (var i = 0 ; i < ghosts.length; i++){
-      if(ghosts[i].y > windowHeight){
+    for (var i=0; i<ghosts2.length; i++){
+      for(var j=0; j<Light_Beams2.length; j++){
+        if(dist(Light_Beams2[j].x, Light_Beams2[j].y, ghosts2[i].x, ghosts2[i].y) < 50){
+          Light_Beams2.splice(0, 1);
+          ghosts2.splice(0, 1);
+          console.log("Killed")
+        }
+      }
+    }
+
+    for (var i=0; i<ghosts3.length; i++){
+      for(var j=0; j<Light_Beams3.length; j++){
+        if(dist(Light_Beams3[j].x, Light_Beams3[j].y, ghosts3[i].x, ghosts3[i].y) < 50){
+          Light_Beams3.splice(0, 1);
+          ghosts3.splice(0, 1);
+          console.log("Killed")
+        }
+      }
+    }
+
+    for (var i = 0 ; i < ghosts1.length; i++){
+      if(ghosts1[i].y > windowHeight){
         console.log("Lose Life");
-        ghosts.splice(0,1);
+        ghosts1.splice(0,1);
+        hit += 1;
+        console.log(hit)
+      } 
+    }
+
+    for (var i = 0 ; i < ghosts2.length; i++){
+      if(ghosts2[i].y > windowHeight){
+        console.log("Lose Life");
+        ghosts2.splice(0,1);
+        hit += 1;
+        console.log(hit)
+      } 
+    }
+
+    for (var i = 0 ; i < ghosts3.length; i++){
+      if(ghosts3[i].y > windowHeight){
+        console.log("Lose Life");
+        ghosts3.splice(0,1);
         hit += 1;
         console.log(hit)
       } 
     }
   }
+
+  
 
 
   // Ghosts Spawning
@@ -89,7 +151,7 @@ function spawn(){
     if (retrigger1 == true){
     retrigger1 = false;
     // fill(0)
-      ghosts.push(new Ghost1());
+      ghosts1.push(new Ghost1());
     console.log("a")
   }
  } else{
@@ -101,7 +163,7 @@ function spawn(){
     if (retrigger2 == true){
     retrigger2 = false;
     // fill(0)
-      ghosts.push(new Ghost2());
+      ghosts2.push(new Ghost2());
     console.log("a")
   }
  } else{
@@ -113,7 +175,7 @@ function spawn(){
     if (retrigger3 == true){
     retrigger3 = false;
     // fill(0)
-      ghosts.push(new Ghost3());
+      ghosts3.push(new Ghost3());
     console.log("a")
   }
  } else{
@@ -142,7 +204,7 @@ function lights(){
   if(sensor1 <= 160 ){
     if (retrigger4 == true){
       retrigger4 = false;
-      Light_Beams.push(new Light_Beam1());
+      Light_Beams1.push(new Light_Beam1());
       console.log("b");
     }
   } else {
@@ -152,7 +214,7 @@ function lights(){
   if(sensor2 <= 15 ){
     if (retrigger5 == true){
       retrigger5 = false;
-      Light_Beams.push(new Light_Beam2());
+      Light_Beams2.push(new Light_Beam2());
       console.log("b");
     }
   } else {
@@ -162,7 +224,7 @@ function lights(){
   if(sensor3 <= 100 ){
     if (retrigger6 == true){
       retrigger6 = false;
-      Light_Beams.push(new Light_Beam3());
+      Light_Beams3.push(new Light_Beam3());
       console.log("b");
     }
   } else {
